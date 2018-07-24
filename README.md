@@ -16,7 +16,7 @@ Guidelines for pull requests:
 * Use StyleCop for consistent code styling
 * Provide full documentation on classes & methods
 * Your PR should be able to be build cross-platform and pass all supplied unit tests (AppVeyor CI & XUnit)
-* Upon adding a new project, you should [add as link](https://tinyurl.com/yc5rbzhl) the file stylecop.json from the root of this repository and [enable it](https://tinyurl.com/yczleafl). Make sure to close and reload your project afterwards.
+* Upon adding a new project, you should [add as link](https://tinyurl.com/yc5rbzhl) the file stylecop.json from the root of this repository and [enable it](https://tinyurl.com/yczleafl). Additionally, add the ruleset from the .config submodule to conform to the same standards. Make sure to close and reload your project afterwards.
 
 ***
 Subprojects consist of:
