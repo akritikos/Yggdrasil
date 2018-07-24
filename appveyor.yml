@@ -1,0 +1,55 @@
+version: 1.0.{build}-{branch}
+configuration: Release
+branches:
+  only:
+    - master
+    - develop
+image: Visual Studio 2017
+clone_folder: C:\Projects\Yggdrasil
+shallow_clone: true
+environment:
+  COVERALLS_REPO_TOKEN:
+    secure: m20KJxF3oEhFzjnJ82CvaEFosLvjYVq33jimoSAfH7pkR8/uTAjnKPtM27W1H5c1
+  CODECOV_REPO_TOKEN:
+    secure: XDfRbLBoZS6FgZ13Fb97YH7SQuTFqss98AM7yUjSVDFFcnyl7cZwRrg0AB8S7qds
+matrix:
+  fast_finish: true
+cache:
+  - packages
+install:
+  - dotnet restore --packages packages
+build:
+  project: Yggdrasil.sln
+  parallel: true
+  verbosity: minimal
+after_build:
+  - 7z a Yggdrasil.zip %APPVEYOR_BUILD_FOLDER%\src\Yggdrasil\bin\Release\netstandard2.0\*.*
+before_test:
+  - dotnet build -c Debug /p:DebugType=Full
+test_script:
+- ps: >-
+    $opencover = (Resolve-Path packages/opencover/*/tools/opencover.console.exe).ToString()
+
+    & $opencover -register:user -target:"dotnet.exe" -targetargs:"test tests\Yggdrasil.Helheim --configuration Debug --no-build" -output:opencoverCoverage.xml -oldStyle -filter:"+[*]* -[Yggdrasil.Helheim*]*"
+after_test:
+- ps: >-
+    $codecov = (Resolve-Path packages/codecov/*/tools/codecov.exe).ToString()
+
+    & $codecov -f "opencoverCoverage.xml" -t $env:CODECOV_REPO_TOKEN
+
+    $coveralls = (Resolve-Path packages/coveralls.net/*/tools/csmacnz.coveralls.exe).ToString()
+
+    & $coveralls --opencover -i opencoverCoverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_JOB_ID --serviceName appveyor
+artifacts:
+  - path: Yggdrasil.zip
+    name: Yggdrasil
+deploy:
+  - provider: GitHub
+    auth_token:
+      secure: Bf3wUfAmQNDpzqxcf/7gbDJP6fgz4xnKy8wwoM45N+VxR/FmgOlm1VElFGTrQTf5
+    artifact: Yggdrasil           # upload all NuGet packages to release assets
+    draft: true
+    prerelease: false
+    on:
+      branch: master                # release from master branch only
+      appveyor_repo_tag: true       # deploy on tag push only
