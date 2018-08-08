@@ -7,7 +7,11 @@
 	"settings": {
 		"workbench.settings.openDefaultSettings": false,
 		"files.exclude": {
-
+			".vs": true, // cache for visual studio
+			".vscode": true, // should be handled via VS Code UI
+			".gitmodules": true, // use command line git to manage
+			"LICENSE.md": true, // external source, no authority to change it
+			"{src,tests}/*/{bin,obj}": true // build artifacts
 		}
 	}
 }
