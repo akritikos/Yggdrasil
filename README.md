@@ -1,6 +1,6 @@
 # Yggdrasil
 
-[![Build status](https://ci.appveyor.com/api/projects/status/yy6b8oq69lsejj11?svg=true)](https://ci.appveyor.com/project/akritikos/yggdrasil)
+[![Build status](https://ci.appveyor.com/api/projects/status/281ylux3tly4a1om/branch/master?svg=true)](https://ci.appveyor.com/project/akritikos/yggdrasil/branch/master)
 [![codecov](https://codecov.io/gh/akritikos/Yggdrasil/branch/master/graph/badge.svg)](https://codecov.io/gh/akritikos/Yggdrasil)
 [![Coverage Status](https://coveralls.io/repos/github/akritikos/Yggdrasil/badge.svg?branch=master)](https://coveralls.io/github/akritikos/Yggdrasil?branch=master)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
@@ -22,7 +22,7 @@ Guidelines for pull requests:
 ***
 Subprojects consist of:
 
-### Yggdrasil.Helheim
+### ForestTests
 
 Contains unit tests and terror, steer clear to avoid dishonorable death.
 
