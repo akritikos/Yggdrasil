@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProjectGuid>{0A2C650F-947B-4967-BD97-13FD519206FD}</ProjectGuid>
+    <RootNamespace>Kritikos.MachineLearning.Forest</RootNamespace>
+    <CodeAnalysisRuleSet>..\..\.config\stylecop.ruleset</CodeAnalysisRuleSet>
+    <Title>Yggdrasil</Title>
+    <Version>1.0.0</Version>
+    <PackageId>Kritikos.MachineLearning.Forest.Yggdrasil</PackageId>
+    <PackageProjectUrl>https://github.org/akritikos/Yggdrasil</PackageProjectUrl>
+    <PackageLicenseUrl>https://opensource.org/licenses/Apache-2.0</PackageLicenseUrl>
+    <PackageTags>Machine Learning;Genetic Algorithm;Decision Tree</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta008" PrivateAssets="All" />
+    <PackageReference Include="Accord.MachineLearning" Version="3.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\.config\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+
+</Project>
