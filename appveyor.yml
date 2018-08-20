@@ -36,7 +36,8 @@ cache:
   - C:\ProgramData\chocolatey\cache -> appveyor.yml
 init:
   - cmd: choco upgrade opencover.portable codecov sonarscanner-msbuild-netcoreapp2.0 -y --no-progress -c C:\ProgramData\chocolatey\cache
-  - cmd: choco upgrade coveralls.io --source https://dotnet.myget.org/F/dotnet-buildtools/api/v2 -y --no-progress -c C:\ProgramData\chocolatey\cache
+  # - cmd: choco upgrade coveralls.io --source https://dotnet.myget.org/F/dotnet-buildtools/api/v2 -y --no-progress -c C:\ProgramData\chocolatey\cache
+  - cmd: dotnet tool install --global coveralls.net
   - cmd: git config --global core.autocrlf true
 install:
   - cmd: git submodule -q update --init
@@ -99,7 +100,7 @@ for:
     - ps: >-
         dotnet $env:SONAR_BINARY end /d:sonar.login=$env:SONAR_REPO_TOKEN
 
-        coveralls.net.exe --opencover "$env:PROJECT.coverage.xml" -r "$env:COVERALLS_REPO_TOKEN"
+        csmacnz.coveralls --useRelativePaths --opencover --repoToken "$env:COVERALLS_REPO_TOKEN" Coverage.xml
 
         if ($env:APPVEYOR_PULL_REQUEST_NUMBER){
           codecov --file "$env:PROJECT.coverage.xml" --token "$env:CODECOV_TOKEN" --build "$env:APPVEYOR_BUILD_NUMBER" --branch "$env:APPVEYOR_REPO_BRANCH" --sha "$env:APPVEYOR_REPO_COMMIT" --slug "$env:APPVEYOR_REPO_NAME" --pr "$env:APPVEYOR_PULL_REQUEST_NUMBER"
