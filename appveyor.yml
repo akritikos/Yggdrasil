@@ -35,9 +35,8 @@ cache:
   - C:\ProgramData\chocolatey\lib
   - C:\ProgramData\chocolatey\cache -> appveyor.yml
 init:
-  - cmd: choco upgrade opencover.portable codecov sonarscanner-msbuild-netcoreapp2.0 -y --no-progress -c C:\ProgramData\chocolatey\cache
+  - cmd: choco upgrade sonarscanner-msbuild-netcoreapp2.0 -y --no-progress -c C:\ProgramData\chocolatey\cache
   # - cmd: choco upgrade coveralls.io --source https://dotnet.myget.org/F/dotnet-buildtools/api/v2 -y --no-progress -c C:\ProgramData\chocolatey\cache
-  - cmd: dotnet tool install --global coveralls.net
   - cmd: git config --global core.autocrlf true
 install:
   - cmd: git submodule -q update --init
@@ -63,6 +62,8 @@ for:
       only:
         - configuration: Release
     before_build:
+    - cmd: choco upgrade opencover.portable codecov -y --no-progress -c C:\ProgramData\chocolatey\cache
+    - cmd: dotnet tool install --global coveralls.net
     - ps: >-
         if ($env:APPVEYOR_PULL_REQUEST_NUMBER){
           dotnet $env:SONAR_BINARY begin "/k:$env:PROJECT" /d:sonar.organization=$env:USERNAME /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=$env:SONAR_REPO_TOKEN /d:sonar.github.pullRequest=$env:APPVEYOR_PULL_REQUEST_NUMBER /d:sonar.github.repository=$env:APPVEYOR_REPO_NAME /d:sonar.github.oauth=$env:GITHUB_REPO_TOKEN /d:sonar.analysis.mode=preview
