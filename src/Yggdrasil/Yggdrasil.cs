@@ -9,7 +9,6 @@ namespace Kritikos.MachineLearning.Forest
 		/// </summary>
 		private Yggdrasil()
 		{
-
 		}
 
 		public T[] Dataset { get; }

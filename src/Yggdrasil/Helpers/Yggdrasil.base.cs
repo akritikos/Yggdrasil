@@ -7,6 +7,6 @@ namespace Kritikos.MachineLearning.Forest.Helpers
 	/// </summary>
 	public class Yggdrasil
 	{
-		private protected static readonly Random Rnd = new Random();
+		public static readonly Random Rnd = new Random();
 	}
 }
